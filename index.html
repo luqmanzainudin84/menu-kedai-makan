@@ -3,21 +3,23 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Menu Kedai Digital</title>
+    <title>Menu Kedai Digital - Square Edition</title>
     <style>
         :root {
-            --primary-color: #e67e22;
-            --bg-color: #f8f9fa;
-            --card-bg: #ffffff;
-            --text-main: #2d3436;
+            --primary: #d35400;
+            --accent: #27ae60;
+            --bg: #f2f2f2;
+            --card-shadow: 0 8px 24px rgba(0,0,0,0.1);
         }
 
         body {
-            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
-            background-color: var(--bg-color);
-            color: var(--text-main);
+            font-family: 'Inter', -apple-system, sans-serif;
+            background-color: var(--bg);
             margin: 0;
             padding: 20px;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
         }
 
         header {
@@ -25,150 +27,173 @@
             margin-bottom: 40px;
         }
 
-        h1 { color: var(--primary-color); margin-bottom: 5px; }
-        p.subtitle { color: #636e72; margin-top: 0; }
+        h1 { color: #2c3e50; font-size: 2.5rem; margin-bottom: 8px; }
+        .subtitle { color: #7f8c8d; font-size: 1.1rem; }
 
-        /* Container untuk Grid Menu */
         .menu-grid {
             display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
-            gap: 25px;
-            max-width: 1200px;
-            margin: 0 auto;
+            grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+            gap: 30px;
+            width: 100%;
+            max-width: 1100px;
         }
 
-        /* Gaya Kad Menu */
+        /* Rekaan Kad Fokus Gambar Square */
         .card {
-            background: var(--card-bg);
-            border-radius: 15px;
+            background: #fff;
+            border-radius: 20px;
             overflow: hidden;
-            box-shadow: 0 10px 20px rgba(0,0,0,0.05);
+            box-shadow: var(--card-shadow);
             transition: transform 0.3s ease;
-            position: relative;
+            display: flex;
+            flex-direction: column;
         }
 
         .card:hover {
-            transform: translateY(-5px);
+            transform: translateY(-10px);
         }
 
-        .card img {
+        /* Container Gambar 1:1 */
+        .image-container {
             width: 100%;
-            height: 200px;
-            object-fit: cover;
-            background-color: #eee;
+            padding-top: 100%; /* Menghasilkan nisbah 1:1 yang sempurna */
+            position: relative;
+            background: #eee;
         }
 
-        .card-content {
+        .image-container img {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            object-fit: cover; /* Memastikan gambar 600x600 memenuhi ruang tanpa stretch */
+        }
+
+        .card-body {
             padding: 20px;
+            flex-grow: 1;
+            display: flex;
+            flex-direction: column;
         }
 
-        .category {
-            font-size: 0.75rem;
-            text-transform: uppercase;
-            letter-spacing: 1px;
-            color: #b2bec3;
-            font-weight: bold;
-        }
-
-        .menu-title {
-            margin: 10px 0;
-            font-size: 1.25rem;
-        }
-
-        .description {
-            font-size: 0.9rem;
-            color: #636e72;
-            height: 40px;
-            overflow: hidden;
-        }
-
-        .footer-card {
+        .badge-row {
             display: flex;
             justify-content: space-between;
             align-items: center;
-            margin-top: 20px;
+            margin-bottom: 12px;
         }
 
-        .price {
-            font-size: 1.3rem;
-            font-weight: bold;
-            color: var(--primary-color);
+        .category-tag {
+            font-size: 0.7rem;
+            font-weight: 800;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+            color: #95a5a6;
         }
 
-        .tag-hot {
-            background: #fab1a0;
-            color: #d63031;
-            padding: 3px 10px;
-            border-radius: 20px;
+        .hot-badge {
+            background: #ff7675;
+            color: white;
+            padding: 4px 12px;
+            border-radius: 50px;
             font-size: 0.7rem;
             font-weight: bold;
+            animation: pulse 2s infinite;
         }
 
-        /* Loading Animation */
-        .loader {
-            text-align: center;
-            font-style: italic;
+        @keyframes pulse {
+            0% { transform: scale(1); }
+            50% { transform: scale(1.05); }
+            100% { transform: scale(1); }
+        }
+
+        .menu-name {
+            font-size: 1.4rem;
+            color: #2d3436;
+            margin: 0 0 10px 0;
+        }
+
+        .menu-desc {
+            font-size: 0.95rem;
             color: #636e72;
-            grid-column: 1 / -1;
+            line-height: 1.5;
+            margin-bottom: 20px;
+            flex-grow: 1;
+        }
+
+        .price-tag {
+            font-size: 1.6rem;
+            font-weight: 900;
+            color: var(--primary);
+            border-top: 1px dashed #dfe6e9;
+            padding-top: 15px;
+        }
+
+        /* State Memuatkan */
+        #loading {
+            font-size: 1.2rem;
+            color: #bdc3c7;
+            margin-top: 50px;
+        }
+
+        @media (max-width: 600px) {
+            .menu-grid { grid-template-columns: 1fr; }
         }
     </style>
 </head>
 <body>
 
     <header>
-        <h1>Warung Digital Kami</h1>
-        <p class="subtitle">Sentiasa Segar, Sentiasa Sedap</p>
+        <h1>Warung Digital</h1>
+        <div class="subtitle">Pilihan Makanan Terbaik Untuk Anda</div>
     </header>
 
-    <div id="menu-container" class="menu-grid">
-        <div class="loader">Sedang memuatkan menu lazat untuk anda...</div>
-    </div>
+    <div id="loading">Sedang menyediakan hidangan...</div>
+    <div id="menu-grid" class="menu-grid"></div>
 
     <script>
-        // Pautan Web App yang anda berikan
-        const API_URL = 'https://script.google.com/macros/s/AKfycbztGn8HAzHYmUNTVrNIMY9TNK4pQ2XUBjYedisZyTOxTMWp7UwqqMUqecnDxiYIPH1l/exec';
+        const SCRIPT_URL = 'https://script.google.com/macros/s/AKfycbztGn8HAzHYmUNTVrNIMY9TNK4pQ2XUBjYedisZyTOxTMWp7UwqqMUqecnDxiYIPH1l/exec';
 
-        async function getMenu() {
+        async function loadMenu() {
             try {
-                const response = await fetch(API_URL);
-                const data = await response.json();
+                const response = await fetch(SCRIPT_URL);
+                const items = await response.json();
                 
-                const container = document.getElementById('menu-container');
-                container.innerHTML = ''; // Kosongkan loader
+                const grid = document.getElementById('menu-grid');
+                const loader = document.getElementById('loading');
+                
+                loader.style.display = 'none';
 
-                data.forEach(item => {
-                    // Tapis hanya menu yang bertanda "Sedia"
+                items.forEach(item => {
                     if (item.Status === "Sedia") {
+                        const isHot = item.Tag === "Hot Seller";
                         
-                        // Logik untuk tag Hot Seller
-                        const tagHTML = item.Tag === "Hot Seller" ? `<span class="tag-hot">🔥 HOT</span>` : '';
-                        
-                        // Bina elemen kad
-                        container.innerHTML += `
+                        grid.innerHTML += `
                             <div class="card">
-                                <img src="${item['Gambar (URL)']}" alt="${item['Nama Menu']}" onerror="this.src='https://via.placeholder.com/300x200?text=Gambar+Tiada'">
-                                <div class="card-content">
-                                    <div class="category">${item.Kategori}</div>
-                                    <h3 class="menu-title">${item['Nama Menu']}</h3>
-                                    <p class="description">${item.Description}</p>
-                                    <div class="footer-card">
-                                        <span class="price">RM ${parseFloat(item.Harga).toFixed(2)}</span>
-                                        ${tagHTML}
+                                <div class="image-container">
+                                    <img src="${item['Gambar (URL)']}" alt="${item['Nama Menu']}" 
+                                         onerror="this.src='https://via.placeholder.com/600x600?text=Gambar+Tiada'">
+                                </div>
+                                <div class="card-body">
+                                    <div class="badge-row">
+                                        <span class="category-tag">${item.Kategori}</span>
+                                        ${isHot ? '<span class="hot-badge">🔥 HOT SELLER</span>' : ''}
                                     </div>
+                                    <h3 class="menu-name">${item['Nama Menu']}</h3>
+                                    <p class="menu-desc">${item.Description}</p>
+                                    <div class="price-tag">RM ${parseFloat(item.Harga).toFixed(2)}</div>
                                 </div>
                             </div>
                         `;
                     }
                 });
-
-            } catch (error) {
-                console.error('Ralat:', error);
-                document.getElementById('menu-container').innerHTML = '<p>Maaf, menu gagal dimuatkan. Sila cuba lagi nanti.</p>';
+            } catch (e) {
+                document.getElementById('loading').innerText = "Ralat memuatkan data. Sila periksa sambungan internet.";
             }
         }
 
-        // Jalankan fungsi
-        getMenu();
+        loadMenu();
     </script>
 </body>
 </html>
